@@ -4,6 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import TabPanel from 'components/TabPanel';
+import ChartView from 'components/ChartView';
 
 function a11yProps(index: any) {
   return {
@@ -33,20 +34,17 @@ export default function SimpleTabs() {
         <Tabs
           value={value}
           onChange={handleChange}
-          aria-label="simple tabs example">
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+          aria-label="View toggle tab">
+          <Tab label="Chart" {...a11yProps(0)} />
+          <Tab label="Table" {...a11yProps(1)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        Item One
+        Chart View
+        <ChartView />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        Item Three
+        Table View
       </TabPanel>
     </div>
   );
