@@ -5,6 +5,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import TabPanel from 'components/TabPanel';
 import ChartView from 'components/ChartView';
+import TableView from 'components/TableView';
 import { getData, EmployeeData } from 'utils/Helper';
 
 function a11yProps(index: any) {
@@ -55,6 +56,7 @@ export default function SimpleTabs() {
       </TabPanel>
       <TabPanel value={value} index={1}>
         Table View
+        <TableView data={data} locations={locations} />
       </TabPanel>
     </div>
   );

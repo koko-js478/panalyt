@@ -1,27 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Line, Datum, Serie } from '@nivo/line';
-import { EmployeeData } from 'utils/Helper';
+import { ViewProps } from 'components/TabPanel';
 
-interface ChartViewProps {
-  data: EmployeeData[];
-  locations: string[];
-}
-
-export default function ChartView(props: ChartViewProps) {
+export default function ChartView(props: ViewProps) {
   const { data, locations } = props;
   const [serie, setSerie] = useState<Serie[]>([]);
 
   useEffect(() => {
-    const datum = new Array<Datum>();
-
-    locations.forEach((location, index) => {
+    const datum: Datum[] = new Array<Datum>();
+    // extract the data from the props
+    locations.forEach((location, index) =>
       datum.push({
         x: location,
         y: data[index].currSalary,
         key: location,
-      });
-    });
-
+      }),
+    );
+    // set serie to be displayed
     setSerie([
       {
         id: 'chart-view',
@@ -32,13 +27,11 @@ export default function ChartView(props: ChartViewProps) {
   }, [data, locations]);
 
   return (
-    <>
-      <Line
-        data={serie}
-        margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
-        width={800}
-        height={500}
-      />
-    </>
+    <Line
+      data={serie}
+      margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
+      width={800}
+      height={500}
+    />
   );
 }
