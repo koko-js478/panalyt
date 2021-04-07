@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import TabPanel from 'components/TabPanel';
 import ChartView from 'components/ChartView';
+import { getData, EmployeeData } from 'utils/Helper';
 
 function a11yProps(index: any) {
   return {
@@ -21,8 +22,17 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export default function SimpleTabs() {
+  // Classes and value for toggle tab
   const classes = useStyles();
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState<number>(0);
+  // original data from the employee data set json file
+  const [data, setData] = useState<EmployeeData[]>([]);
+  // array for locations
+  const [locations, setLocations] = useState<string[]>([]);
+
+  useEffect(() => {
+    getData(setData, setLocations);
+  }, []);
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
@@ -41,7 +51,7 @@ export default function SimpleTabs() {
       </AppBar>
       <TabPanel value={value} index={0}>
         Chart View
-        <ChartView />
+        <ChartView data={data} locations={locations} />
       </TabPanel>
       <TabPanel value={value} index={1}>
         Table View
