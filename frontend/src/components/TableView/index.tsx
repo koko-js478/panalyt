@@ -4,7 +4,9 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import numeral from 'numeral';
 import { ViewProps } from 'components/TabPanel';
+import { EmployeeData } from 'utils/Helper';
 
 interface RowData {
   location: string;
@@ -15,28 +17,37 @@ interface RowData {
 export default function TableView(props: ViewProps) {
   const { data, locations } = props;
   const [rows, setRows] = useState<RowData[]>([]);
+  const [total, setTotal] = useState<EmployeeData>();
 
   useEffect(() => {
     locations.forEach((location, index) => {
       const rows: RowData[] = new Array<RowData>();
+      // total count and average salary
+      let total: EmployeeData = {
+        prevSalary: 0,
+        currSalary: 0,
+        employeeCount: 0,
+      };
 
       locations.forEach((location, index) => {
+        const { currSalary, prevSalary, employeeCount } = data[index];
+        // push row for a table view
         rows.push({
           location,
-          salary: new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-          }).format(data[index].currSalary),
-          delta: new Intl.NumberFormat('en-US', {
-            style: 'percent',
-          }).format(
-            (data[index].currSalary - data[index].prevSalary) /
-              data[index].prevSalary,
-          ),
+          salary: numeral(currSalary).format('$0,0'),
+          delta: numeral((currSalary - prevSalary) / prevSalary).format('+0%'),
         });
+        // sum up prev and curr salary of employees
+        total.prevSalary += prevSalary * employeeCount;
+        total.currSalary += currSalary * employeeCount;
+        total.employeeCount += employeeCount;
       });
+      // get the average salary
+      total.prevSalary /= total.employeeCount;
+      total.currSalary /= total.employeeCount;
 
       setRows(rows);
+      setTotal(total);
     });
   }, [data, locations]);
 
@@ -57,6 +68,18 @@ export default function TableView(props: ViewProps) {
             <TableCell>{row.delta}</TableCell>
           </TableRow>
         ))}
+
+        {total && (
+          <TableRow key={'Total'}>
+            <TableCell>{'Total'}</TableCell>
+            <TableCell>{numeral(total?.currSalary).format('$0,0')}</TableCell>
+            <TableCell>
+              {numeral(
+                (total?.currSalary - total?.prevSalary) / total?.prevSalary,
+              ).format('+0%')}
+            </TableCell>
+          </TableRow>
+        )}
       </TableBody>
     </Table>
   );
