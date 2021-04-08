@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Line, Datum, Serie } from '@nivo/line';
+import { ResponsiveLine, Datum, Serie } from '@nivo/line';
 import { ViewProps } from 'components/TabPanel';
 
 export default function ChartView(props: ViewProps) {
@@ -27,11 +27,13 @@ export default function ChartView(props: ViewProps) {
   }, [data, locations]);
 
   return (
-    <Line
-      data={serie}
-      margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
-      width={800}
-      height={500}
-    />
+    <div style={{ height: '600px' }}>
+      <ResponsiveLine
+        data={serie}
+        margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
+        pointSize={10}
+        pointBorderWidth={2}
+      />
+    </div>
   );
 }
