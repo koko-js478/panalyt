@@ -1,19 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import TabBar from 'components/TabBar';
 import TabPanel from 'components/TabPanel';
 import ChartView from 'components/ChartView';
 import TableView from 'components/TableView';
 import { getData, EmployeeData } from 'utils/Helper';
-
-function a11yProps(index: any) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -22,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export default function SimpleTabs() {
+export default function HomePage(props) {
   // Classes and value for toggle tab
   const classes = useStyles();
   const [value, setValue] = useState<number>(0);
@@ -35,21 +26,9 @@ export default function SimpleTabs() {
     getData(setData, setLocations);
   }, []);
 
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-    setValue(newValue);
-  };
-
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="View toggle tab">
-          <Tab label="Chart" {...a11yProps(0)} />
-          <Tab label="Table" {...a11yProps(1)} />
-        </Tabs>
-      </AppBar>
+    <div className={classes.root} {...props}>
+      <TabBar value={value} setValue={setValue} />
       <TabPanel value={value} index={0}>
         Chart View
         <ChartView data={data} locations={locations} />
