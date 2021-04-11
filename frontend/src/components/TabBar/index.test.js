@@ -1,25 +1,18 @@
-import { useState } from 'react';
 import { render, screen } from '@testing-library/react';
-import TabBar from './index.tsx';
+import TabBar from 'components/TabBar';
+
+test('should render buttons for the chart and the table', () => {
+  render(<TabBar />);
+  expect(screen.getByText('Chart')).toBeInTheDocument();
+  expect(screen.getByText('Table')).toBeInTheDocument();
+});
 
 test('should select chart', () => {
-  render(<TabBar value={0} />);
-
+  render(<TabBar />);
   expect(
     screen.getByRole('tab', { name: /chart/i, selected: true }),
   ).toBeInTheDocument();
   expect(
     screen.getByRole('tab', { name: /table/i, selected: false }),
-  ).toBeInTheDocument();
-});
-
-test('should select table', () => {
-  render(<TabBar value={1} />);
-
-  expect(
-    screen.getByRole('tab', { name: /chart/i, selected: false }),
-  ).toBeVisible();
-  expect(
-    screen.getByRole('tab', { name: /table/i, selected: true }),
   ).toBeInTheDocument();
 });

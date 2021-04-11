@@ -4,7 +4,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 interface TabBarProps {
-  value: number;
+  value?: number;
   setValue: (value: number | ((prev: number) => number)) => void;
 }
 
@@ -16,7 +16,7 @@ const a11yProps = (index: number) => {
 };
 
 export default function TabBar(props: TabBarProps) {
-  const { value, setValue } = props;
+  const { value = 0, setValue } = props;
 
   const onChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
