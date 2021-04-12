@@ -13,7 +13,14 @@ export interface EmployeeData {
   employeeCount: number;
 }
 
-export const getData = (setData, setLocations) => {
+// load the data from json file
+export const loadData = (
+  setData: (
+    value: EmployeeData[] | ((prev: EmployeeData[]) => EmployeeData[]),
+  ) => void,
+  setLocations: (value: string[] | ((prev: string[]) => string[])) => void,
+  setSelections: (value: boolean[] | ((prev: boolean[]) => boolean[])) => void,
+) => {
   fetch('EmployeeDataset.json', {
     headers: {
       'Content-Type': 'application/json',
@@ -61,5 +68,6 @@ export const getData = (setData, setLocations) => {
 
       setData(data);
       setLocations(locations);
+      setSelections(new Array<boolean>(locations.length).fill(true));
     });
 };

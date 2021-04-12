@@ -5,7 +5,7 @@ import TabPanel from 'components/TabPanel';
 import ChartView from 'components/ChartView';
 import TableView from 'components/TableView';
 import FilterBar from 'components/FilterBar';
-import { getData, EmployeeData } from 'utils/Helper';
+import { loadData, EmployeeData } from 'utils/Helper';
 
 interface HomeProps {
   id: string;
@@ -34,24 +34,33 @@ const HomePage = (props: HomeProps) => {
   const [data, setData] = useState<EmployeeData[]>([]);
   // array for locations
   const [locations, setLocations] = useState<string[]>([]);
+  // array for location filter
+  const [selections, setSelections] = useState<boolean[]>([]);
+  // get location from the selections
+  const filterLocations = (locations: string[]) =>
+    locations.filter((value, index) => selections[index]);
 
   useEffect(() => {
-    getData(setData, setLocations);
+    loadData(setData, setLocations, setSelections);
   }, []);
 
   return (
     <div className={classes.root} id={id}>
       <TabBar value={value} setValue={setValue} />
       <div className={classes.body}>
-        <FilterBar />
+        <FilterBar
+          locations={locations}
+          selections={selections}
+          setSelections={setSelections}
+        />
         <div className={classes.panel}>
           <TabPanel value={value} index={0}>
             Chart View
-            <ChartView data={data} locations={locations} />
+            <ChartView data={data} locations={filterLocations(locations)} />
           </TabPanel>
           <TabPanel value={value} index={1}>
             Table View
-            <TableView data={data} locations={locations} />
+            <TableView data={data} locations={filterLocations(locations)} />
           </TabPanel>
         </div>
       </div>
