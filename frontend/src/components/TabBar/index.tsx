@@ -5,7 +5,7 @@ import Tab from '@material-ui/core/Tab';
 
 interface TabBarProps {
   value?: number;
-  setValue: (value: number | ((prev: number) => number)) => void;
+  setValue?: (value: number | ((prev: number) => number)) => void;
 }
 
 const a11yProps = (index: number) => {
@@ -19,7 +19,9 @@ const TabBar = (props: TabBarProps) => {
   const { value = 0, setValue } = props;
 
   const onChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-    setValue(newValue);
+    if (setValue !== undefined) {
+      setValue(newValue);
+    }
   };
 
   return (

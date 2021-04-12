@@ -79,7 +79,7 @@ const TableView = (props: ViewProps) => {
       employeeCount: 0,
     };
 
-    locations.forEach((location, index) => {
+    locations?.forEach((location, index) => {
       const { currSalary, prevSalary, employeeCount } = data[index];
       const deltaValue = (currSalary - prevSalary) / prevSalary;
       // push row for a table view
@@ -98,7 +98,10 @@ const TableView = (props: ViewProps) => {
     total.prevSalary /= total.employeeCount;
     total.currSalary /= total.employeeCount;
     // get detal of the total salary
-    const totalDelta = (total.currSalary - total.prevSalary) / total.prevSalary;
+    const totalDelta =
+      total.prevSalary !== 0
+        ? (total.currSalary - total.prevSalary) / total.prevSalary
+        : 0;
     // push total row
     rows.push({
       location: 'Total',
