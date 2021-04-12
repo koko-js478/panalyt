@@ -41,10 +41,7 @@ const HomePage = (props: HomeProps) => {
       </TabPanel>
       <TabPanel value={value} index={1}>
         Table View
-        <TableView
-          data={[{ prevSalary: 100, currSalary: 120, employeeCount: 1 }]}
-          locations={['US']}
-        />
+        <TableView data={data} locations={locations} />
       </TabPanel>
     </div>
   );

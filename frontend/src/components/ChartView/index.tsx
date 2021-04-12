@@ -9,7 +9,7 @@ const ChartView = (props: ViewProps) => {
   useEffect(() => {
     const datum: Datum[] = new Array<Datum>();
     // extract the data from the props
-    locations.forEach((location, index) =>
+    locations?.forEach((location, index) =>
       datum.push({
         x: location,
         y: data[index].currSalary,
