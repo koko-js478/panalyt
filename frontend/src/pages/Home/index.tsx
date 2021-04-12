@@ -4,6 +4,7 @@ import TabBar from 'components/TabBar';
 import TabPanel from 'components/TabPanel';
 import ChartView from 'components/ChartView';
 import TableView from 'components/TableView';
+import FilterBar from 'components/FilterBar';
 import { getData, EmployeeData } from 'utils/Helper';
 
 interface HomeProps {
@@ -14,6 +15,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
+  },
+  body: {
+    display: 'flex',
+  },
+  panel: {
+    flex: 1,
   },
 }));
 
@@ -35,14 +42,19 @@ const HomePage = (props: HomeProps) => {
   return (
     <div className={classes.root} id={id}>
       <TabBar value={value} setValue={setValue} />
-      <TabPanel value={value} index={0}>
-        Chart View
-        <ChartView data={data} locations={locations} />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        Table View
-        <TableView data={data} locations={locations} />
-      </TabPanel>
+      <div className={classes.body}>
+        <FilterBar />
+        <div className={classes.panel}>
+          <TabPanel value={value} index={0}>
+            Chart View
+            <ChartView data={data} locations={locations} />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            Table View
+            <TableView data={data} locations={locations} />
+          </TabPanel>
+        </div>
+      </div>
     </div>
   );
 };
