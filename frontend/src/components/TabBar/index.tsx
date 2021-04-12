@@ -15,7 +15,7 @@ const a11yProps = (index: number) => {
   };
 };
 
-export default function TabBar(props: TabBarProps) {
+const TabBar = (props: TabBarProps) => {
   const { value = 0, setValue } = props;
 
   const onChange = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -30,4 +30,6 @@ export default function TabBar(props: TabBarProps) {
       </Tabs>
     </AppBar>
   );
-}
+};
+
+export default TabBar;

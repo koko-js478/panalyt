@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export default function HomePage(props) {
+const HomePage = (props) => {
   // Classes and value for toggle tab
   const classes = useStyles();
   const [value, setValue] = useState<number>(0);
@@ -39,4 +39,6 @@ export default function HomePage(props) {
       </TabPanel>
     </div>
   );
-}
+};
+
+export default HomePage;

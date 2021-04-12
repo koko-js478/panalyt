@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { ResponsiveLine, Datum, Serie } from '@nivo/line';
 import { ViewProps } from 'components/TabPanel';
 
-export default function ChartView(props: ViewProps) {
+const ChartView = (props: ViewProps) => {
   const { data, locations } = props;
   const [serie, setSerie] = useState<Serie[]>([]);
 
@@ -36,4 +36,6 @@ export default function ChartView(props: ViewProps) {
       />
     </div>
   );
-}
+};
+
+export default ChartView;

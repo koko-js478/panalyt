@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -62,7 +62,7 @@ const getDeltaClass = (deltaValue: number, classes: ClassNameMap): string =>
       : classes.zero
   }`;
 
-export default function TableView(props: ViewProps) {
+const TableView = (props: ViewProps) => {
   // get data and locations from props
   const { data, locations } = props;
   // row data
@@ -141,4 +141,6 @@ export default function TableView(props: ViewProps) {
       </TableBody>
     </Table>
   );
-}
+};
+
+export default TableView;
